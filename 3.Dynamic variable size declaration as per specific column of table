@@ -16,3 +16,22 @@ dbms_output.put_line('Employee details are: ');
 dbms_output.put_line(emp_id||' '||emp_name||' '||sal||' '||comm||' '||total_sal);
 end;
 /
+
+
+--Using %rowtype declarations
+
+select * from employees;
+set SERVEROUTPUT on;
+declare
+i employees%rowtype;
+total_sal employees.SALARY%type;
+begin
+i.employee_id:=&emp_id;
+select first_name,department_id,salary,commission_pct into i.first_name,i.department_id,i.salary,i.commission_pct
+from employees where employee_id=i.employee_id;
+--calculating net salary
+total_sal:=i.salary+100*nvl(i.commission_pct,0);
+dbms_output.put_line('Employee details are: ');
+dbms_output.put_line(i.employee_id||' '||i.first_name||' '||i.salary||' '||i.commission_pct||' '||total_sal);
+end;
+/
