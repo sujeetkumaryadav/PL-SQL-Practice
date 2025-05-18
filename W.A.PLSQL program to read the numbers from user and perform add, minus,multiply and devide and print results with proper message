@@ -1,0 +1,18 @@
+declare 
+a number(10):=&1;
+b number(10):=&2;
+c number(10);
+d number(10);
+e number(10);
+f number(10);
+begin
+c:=a+b;
+d:=a-b;
+e:=a*b;
+f:=a/b;
+dbms_output.put_line('Add: '||c);
+dbms_output.put_line('Sub: '||d);
+dbms_output.put_line('Mul: '||e);
+dbms_output.put_line('Div: '||f);
+end;
+/
