@@ -1,0 +1,19 @@
+select * from employees;
+set SERVEROUTPUT on;
+declare
+emp_id number(10):=&employee_id;
+emp_name varchar(20);
+dept_id number(10);
+sal number(10);
+comm number(10,3);
+total_sal number(10);
+begin
+select first_name,department_id,salary,commission_pct into emp_name,dept_id,sal,comm
+from employees where employee_id=emp_id;
+--calculating net salary
+total_sal:=sal+100*nvl(comm,0);
+dbms_output.put_line('Employee details are: ');
+dbms_output.put_line(emp_id||' '||emp_name||' '||sal||' '||comm||' '||total_sal);
+end;
+/
+set SERVEROUTPUT on;
