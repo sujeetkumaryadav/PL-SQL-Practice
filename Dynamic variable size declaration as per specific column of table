@@ -1,0 +1,18 @@
+select * from employees;
+set SERVEROUTPUT on;
+declare
+emp_id employees.employee_id%type:=&employee_id;
+emp_name employees.FIRST_NAME%type;
+dept_id employees.DEPARTMENT_ID%type;
+sal employees.SALARY%type;
+comm employees.COMMISSION_PCT%type;
+total_sal employees.SALARY%type;
+begin
+select first_name,department_id,salary,commission_pct into emp_name,dept_id,sal,comm
+from employees where employee_id=emp_id;
+--calculating net salary
+total_sal:=sal+100*nvl(comm,0);
+dbms_output.put_line('Employee details are: ');
+dbms_output.put_line(emp_id||' '||emp_name||' '||sal||' '||comm||' '||total_sal);
+end;
+/
