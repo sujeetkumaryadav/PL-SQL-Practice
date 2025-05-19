@@ -12,3 +12,31 @@ dbms_output.put_line('Student details are: ');
 dbms_output.put_line(i.roll||' '||i.name||' '||i.class||' '||total_marks||' '||Avg_marks);
 end;
 /
+
+
+--------------------------------------------------------------------------------------------
+
+DECLARE
+i student%rowtype;
+total_marks number(6);
+Avg_marks number(6);
+result varchar2(20);
+begin
+i.roll:=&roll;
+select ROLL,NAME,CLASS,M1,M2,M3,M4,M5,M6 into i.ROLL,i.NAME,i.CLASS,i.M1,i.M2,i.M3,i.M4,i.M5,i.M6
+from student where roll=i.roll;
+total_marks:=i.M1+i.M2+i.M3+i.M4+i.M5+i.M6;
+Avg_marks:=total_marks/6;
+--Checking for different condition
+
+if i.m1<40 or i.m2<40 or i.m3<40 or i.m4<40 or i.m5<40 or i.m6<40 then result:='Fail';
+elsif Avg_marks>=70 then result:='Distinction';
+elsif Avg_marks>=60 then result:='First Class';
+elsif Avg_marks>=50 then result:='Second Class';
+else
+result:='Third class';
+end if;
+dbms_output.put_line('Student details are: ');
+dbms_output.put_line(i.roll||' '||i.name||' '||i.class||' '||total_marks||' '||Avg_marks||' '||result);
+end;
+/
