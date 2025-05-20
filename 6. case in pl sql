@@ -1,0 +1,15 @@
+declare 
+grade char(1):='&grade';
+begin
+case grade
+when 'A' then
+dbms_output.put_line('grade is A');
+when 'B' then
+dbms_output.put_line('grade is B');
+when 'C' then
+dbms_output.put_line('grade is C');
+else
+dbms_output.put_line('grade is D');
+end case;
+end;
+/
