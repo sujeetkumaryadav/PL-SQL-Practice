@@ -1,0 +1,14 @@
+declare
+a number(10):=1;
+begin
+dbms_output.put_line('Numbers are: ');
+loop
+dbms_output.put_line(a);
+a:=a+1;
+--exit when(a>10);
+if a>10 then
+exit;
+end if;
+end loop;
+end;
+/
