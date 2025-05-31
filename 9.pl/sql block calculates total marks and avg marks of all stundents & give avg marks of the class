@@ -1,0 +1,27 @@
+declare
+cursor c2 is select roll,name,m1,m2,m3,m4,m5,m6 from student where class=3;
+i c2%rowtype;
+tot_marks number(6);
+avg_marks number(5,2);
+classtot number(12):=0;
+classavg number(7,2);
+begin
+open c2;
+if c2%isopen then
+dbms_output.put_line('Student Details are:');
+loop
+fetch c2 into i.roll,i.name,i.m1,i.m2,i.m3,i.m4,i.m5,i.m6;
+exit when c2%notfound;
+tot_marks:=i.m1+i.m2+i.m3+i.m4+i.m5+i.m6;
+avg_marks:=tot_marks/6;
+classtot:=classtot+tot_marks;
+dbms_output.put_line(i.roll||' '||i.name||' '||tot_marks||' '||avg_marks);
+end loop;
+classavg:=classtot/c2%rowcount;
+dbms_output.put_line('Avg marks of class is: '||classavg);
+close c2;
+else
+dbms_output.put_line('Unable to open the cursor');
+end if;
+end;
+/
