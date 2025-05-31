@@ -1,0 +1,31 @@
+set SERVEROUTPUT on;
+declare
+cursor c1 is select employee_id,first_name,commission_pct from employees order by department_id;
+veno employees.employee_id%type;
+vname employees.first_name%type;
+vcomm employees.commission_pct%type;
+begin
+open c1;
+if c1%isopen then
+dbms_output.put_line('Employees New Commission Report');
+loop
+fetch c1 into veno,vname,vcomm;
+exit when c1%notfound;
+if vcomm is null then
+vcomm:=3000;
+elsif vcomm=0 then
+vcomm:=2500;
+else
+vcomm:=vcomm+vcomm*.25;
+end if;
+update employees set commission_pct=vcomm where employee_id=veno;
+dbms_output.put_line(c1%rowcount||' '||veno||' '||vname||' '||vcomm);
+end loop;
+dbms_output.put_line(c1%rowcount ||'Employess are updated with new commission');
+close c1;
+commit;
+ELSE
+dbms_output.put_line('Unable to open cursor');
+end if;
+end;
+/
