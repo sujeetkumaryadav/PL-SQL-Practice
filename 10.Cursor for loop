@@ -1,0 +1,8 @@
+declare
+cursor c2 is select * from departments;
+begin
+for i in c2 loop
+dbms_output.put_line(c2%rowcount||' '||i.department_id||' '||i.department_name);
+end loop; --close cursor
+end;
+/
