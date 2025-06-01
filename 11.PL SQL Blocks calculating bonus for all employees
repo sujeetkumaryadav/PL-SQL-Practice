@@ -1,0 +1,27 @@
+declare
+cursor c2 is select employee_id,first_name,salary+nvl(commission_pct,0) net,job_id from employees
+order by salary;
+i c2%rowtype;
+bonus number(12,2);
+totbonus number(20):=0;
+begin
+dbms_output.put_line('Employees Bonus Report');
+dbms_output.put_line('Sno Employee_id Ename job Bonus');
+for i in c2 loop
+if i.job_id='IT_PROG' then
+bonus:=round(i.net*1.25);
+elsif i.job_id='FI_MGR' then
+bonus:=round(i.net*1.35);
+elsif i.job_id='FI_ACCOUNT' then
+bonus:=round(i.net*1.45);
+else
+bonus:=round(i.net*1.50);
+end if;
+totbonus:=totbonus+bonus;
+dbms_output.put_line(c2%rowcount||' '||i.employee_id||' '||i.first_name||' '||i.job_id||' '||bonus);
+exit when(c2%rowcount>=10 or totbonus>=200000);
+/*calculates bonus for first 10 lowest paid
+total bonus upto 200000 */
+end loop;
+end;
+/
