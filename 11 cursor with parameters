@@ -1,0 +1,33 @@
+declare
+cursor c1(dno number) is select * from employees where department_id=dno;
+i c1%rowtype;
+incre number(16);
+net number(16,2);
+exp number(2);
+begin
+open c1(&dno);
+dbms_output.put_line('Employee Increment Report');
+loop 
+fetch c1 into i;
+exit when c1%notfound;
+net:=i.salary+nvl(i.commission_pct,0);
+exp:=round(months_between(sysdate,i.hire_date)/12);
+if exp<=2 then
+incre:=net*.25;
+elsif exp<=5 then
+incre:=net*.45;
+else
+incre:=net*.65;
+end if;
+update employees set salary=salary+incre where employee_id=i.employee_id;
+dbms_output.put_line(i.employee_id||' '||i.first_name||' '||i.job_id||' '||exp||' '||incre);
+end loop;
+close c1;
+--commit;
+--Reopening cursor in for loop
+dbms_output.put_line('Employee Details are: ');
+for k in c1(&dept_id) loop
+dbms_output.put_line(k.employee_id||' '||k.first_name||' '||k.job_id||' '||k.department_id||' '||k.hire_date);
+end loop;
+end;
+/
