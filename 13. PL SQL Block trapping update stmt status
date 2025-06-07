@@ -1,0 +1,16 @@
+set serveroutput on;
+
+declare
+vdept number(10):=&dept_id;
+begin
+update employee set salary=salary+2000 where dept_id=vdept;
+if sql%notfound then
+dbms_output.put_line('Unable to update-No such dept found');
+else
+dbms_output.put_line(sql%rowcount||' Rows updated successfully');
+
+commit;
+end if;
+
+end;
+/
