@@ -1,0 +1,20 @@
+DECLARE
+  i NUMBER := 1;
+  j NUMBER;
+  n number:=&n;
+BEGIN
+  <<outer_loop>>
+  WHILE i <= n LOOP
+    j := 1;
+
+    <<inner_loop>>
+    WHILE j <= i LOOP
+      DBMS_OUTPUT.PUT('*');
+      j := j + 1;
+    END LOOP inner_loop;
+
+    DBMS_OUTPUT.PUT_LINE('');
+    i := i + 1;
+  END LOOP outer_loop;
+END;
+/
