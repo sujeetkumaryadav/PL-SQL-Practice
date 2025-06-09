@@ -1,0 +1,33 @@
+set serveroutput on;
+
+declare
+veno employee.emp_id%type:=&empid;
+vname employee.emp_name%type;
+vsal employee.salary%type;
+--declaring user defined error
+salary_missing exception;
+begin
+select emp_name,salary into vname,vsal from employee where emp_id=veno;
+if vsal is null then
+Raise salary_missing;
+else
+vsal:=vsal+vsal*.25;
+update employee set salary=vsal where emp_id=veno;
+dbms_output.put_line(veno||' '||vname||' '||vsal);
+commit;
+end if;
+
+exception
+when no_data_found then
+dbms_output.put_line('No Such Employee Exist with Employee ID: '||veno);
+when too_many_rows then
+dbms_output.put_line('More than one employee found for employee id:'||veno);
+when salary_missing then
+dbms_output.put_line('Employee has null salary-providing default pay');
+update employee set salary=1500 where emp_id=veno;
+commit;
+when others then
+dbms_output.put_line('Internal error occured.');
+dbms_output.put_line(sqlcode||' '||sqlerrm);
+end;
+/
