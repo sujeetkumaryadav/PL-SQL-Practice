@@ -1,0 +1,12 @@
+declare
+vroll number(6):=&roll;
+vname varchar2(20);
+tot_marks number(6);
+begin
+select name,m1+m2+m3+m4+m5+m6 into vname,tot_marks from student where roll=vroll;
+dbms_output.put_line(vroll||' '||vname);
+exception
+when no_data_found then
+dbms_output.put_line('No such student exist in students table with roll no: '||vroll);
+end;
+/
